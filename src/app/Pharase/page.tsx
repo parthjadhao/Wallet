@@ -1,21 +1,30 @@
+"use client"
 import { generateMnemonic, mnemonicToSeedSync } from "bip39"
 import React, { Children, ReactNode, useEffect, useState } from "react";
 import { PrimaryButton } from "../component/Button";
-
-const Words = ({ children }: {
-    children: React.ReactNode
-}) => {
-    return <div className="p-2 flex justify-center iteam-align h-16 text-white rounded-lg text-1xl m-2">
-        {children}
-    </div>
-}
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "@/db/db.model";
+import { useRouter } from "next/navigation";
+// import { useRouter } from "next/compat/router";
 
 const Phrase = () => {
+
+    const router = useRouter();
+    // useEffect(() => {
     const mnemonic = generateMnemonic();
     const mnemonicArray = mnemonic.split(" ")
     console.log(mnemonicArray)
-    function createSeed() {
-        
+
+    // })
+    async function createSeed() {
+        // // step : 1
+        // // create seed
+        // const seed = mnemonicToSeedSync(mnemonic);
+        // // store it in indexeDB storage
+        // await db.wallet.add({ seed: seed })
+        // // router.push("/CreatePassword");
+        router.push('/CreatePassword')
+        // alert("button clicked and this much code executed")
     }
 
     return <>
@@ -31,12 +40,12 @@ const Phrase = () => {
                 </div>
                 <div className="col-span-12">
                     <div className="grid grid-cols-3">
-                        {mnemonicArray.map((iteam)=><Words>{iteam}</Words>)}
+                        {mnemonicArray.map((iteam) => <Words>{iteam}</Words>)}
                     </div>
                 </div>
                 <div className="col-span-12">
                     <div className="flex justify-center">
-                        <PrimaryButton onClick={()=>{createSeed()}}>Next</PrimaryButton>
+                        <PrimaryButton onClick={() => { createSeed() }}>Next</PrimaryButton>
                     </div>
                 </div>
             </div>
@@ -44,5 +53,13 @@ const Phrase = () => {
     </>
 }
 
+
+const Words = ({ children }: {
+    children: React.ReactNode
+}) => {
+    return <div className="p-2 flex justify-center iteam-align h-16 text-white rounded-lg text-1xl m-2">
+        {children}
+    </div>
+}
 
 export default Phrase
