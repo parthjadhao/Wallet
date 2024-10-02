@@ -14,9 +14,8 @@ const CreatePassword = () => {
                     <input className="text-2xl block m-5 w-96 p-5 rounded-lg bg-slate-900" type="password" placeholder="Enter the password" />
                     <input className="text-2xl block m-5 w-96 p-5 rounded-lg bg-slate-900" type="password" placeholder="confirm password" />
                     <div className="flex justify-center">
-                        <PrimaryButton onClick={()=>{
-                            router.push("/EnterPassword")
-                            alert("hello")
+                        <PrimaryButton onClick={() => {
+                            router.push('/dashbord')
                         }}>Next</PrimaryButton>
                     </div>
                 </form>
