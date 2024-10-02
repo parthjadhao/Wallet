@@ -1,65 +1,65 @@
-"use client"
-import { generateMnemonic, mnemonicToSeedSync } from "bip39"
-import React, { Children, ReactNode, useEffect, useState } from "react";
+"use client";
+import { generateMnemonic } from "bip39";
+import React, { useEffect, useState } from "react";
 import { PrimaryButton } from "../component/Button";
-import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "@/db/db.model";
 import { useRouter } from "next/navigation";
-// import { useRouter } from "next/compat/router";
+import CryptoJS from 'crypto-js';
 
 const Phrase = () => {
-
     const router = useRouter();
-    // useEffect(() => {
-    const mnemonic = generateMnemonic();
-    const mnemonicArray = mnemonic.split(" ")
-    console.log(mnemonicArray)
+    const [mnemonic, setMnemonic] = useState(generateMnemonic());
+    const mnemonicArray = mnemonic.split(" ");
 
-    // })
-    async function createSeed() {
-        // // step : 1
-        // // create seed
-        // const seed = mnemonicToSeedSync(mnemonic);
-        // // store it in indexeDB storage
-        // await db.wallet.add({ seed: seed })
-        // // router.push("/CreatePassword");
-        router.push('/CreatePassword')
-        // alert("button clicked and this much code executed")
+    useEffect(() => {
+        if (localStorage.getItem("seed")) {
+            router.push("/EnterPassword");
+        }
+    }, [router]);
+
+    const createSeed = () => {
+        const secret = process.env.PASSWORD_SECRET_KEY;
+        if (!secret) {
+            throw new Error("Missing PASSWORD_SECRET_KEY");
+        }
+
+        const encryptedSeed = CryptoJS.AES.encrypt(mnemonic, secret).toString();
+        console.log(encryptedSeed);
+        localStorage.setItem("seed", encryptedSeed);
+        router.push("/CreatePassword");
     }
 
-    return <>
+    return (
         <div className="flex justify-center mt-32">
             <div className="grid grid-cols-12">
                 <div className="col-span-12 text-6xl m-2 font-extrabold">
-                    Secret Recovery Phase
+                    Secret Recovery Phrase
                 </div>
                 <div className="col-span-12 text-2xl m-2 text-slate-400">
                     <div className="flex justify-center">
-                        Save this words in safe place
+                        Save these words in a safe place
                     </div>
                 </div>
                 <div className="col-span-12">
                     <div className="grid grid-cols-3">
-                        {mnemonicArray.map((iteam) => <Words>{iteam}</Words>)}
+                        {mnemonicArray.map((item) => (
+                            <Words key={item}>{item}</Words>
+                        ))}
                     </div>
                 </div>
-                <div className="col-span-12">
-                    <div className="flex justify-center">
-                        <PrimaryButton onClick={() => { createSeed() }}>Next</PrimaryButton>
-                    </div>
+                <div className="col-span-12 flex justify-center">
+                    <PrimaryButton onClick={createSeed}>Next</PrimaryButton>
                 </div>
             </div>
         </div>
-    </>
+    );
 }
 
-
-const Words = ({ children }: {
-    children: React.ReactNode
-}) => {
-    return <div className="p-2 flex justify-center iteam-align h-16 text-white rounded-lg text-1xl m-2">
-        {children}
-    </div>
+const Words = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <div className="p-2 flex justify-center items-center h-16 text-white rounded-lg text-1xl m-2">
+            {children}
+        </div>
+    );
 }
 
-export default Phrase
+export default Phrase;
