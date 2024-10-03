@@ -36,7 +36,7 @@ const CreatePassword = () => {
         }
 
         try {
-            const seed = CryptoJS.AES.decrypt(fetchedSeed, process.env.PASSWORD_SECRET_KEY!).toString(CryptoJS.enc.Utf8);
+            const seed = CryptoJS.AES.decrypt(fetchedSeed, process.env.NEXT_PUBLIC_PASSWORD_SECRET_KEY!).toString(CryptoJS.enc.Utf8);
             if (!seed) {
                 alert("Failed to decrypt seed");
                 return;

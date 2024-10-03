@@ -14,10 +14,10 @@ const Phrase = () => {
         if (localStorage.getItem("seed")) {
             router.push("/EnterPassword");
         }
-    }, [router]);
+    }, []);
 
     const createSeed = () => {
-        const secret = process.env.PASSWORD_SECRET_KEY;
+        const secret = process.env.NEXT_PUBLIC_PASSWORD_SECRET_KEY;;
         if (!secret) {
             throw new Error("Missing PASSWORD_SECRET_KEY");
         }

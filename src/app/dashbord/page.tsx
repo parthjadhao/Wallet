@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { PrimaryButton } from "../component/Button";
 import { useRouter } from "next/navigation";
-import { type } from "os";
 
 const Dashbord = () => {
   const router = useRouter();
@@ -72,16 +71,13 @@ export default Dashbord;
 const AccountDetail = ({ account }: { account: any }) => {
   const [copied, setCopied] = useState(false);
   const [balance, setBalance] = useState<number | null>(null);
-//   const publicKey = account; // Use account as public key for the example
   const publicKey = account?.publicKey ?? ""; 
 
   useEffect(() => {
     console.log("this is :- "+typeof(publicKey))
-    // Function to fetch balance from the blockchain using the public key (replace with actual RPC call)
     const fetchBalance = async () => {
       try {
-        // Simulate an RPC call to the blockchain
-        const fetchedBalance = await mockFetchBalance(publicKey); // Replace this with actual RPC call
+        const fetchedBalance = await mockFetchBalance(publicKey);
         setBalance(fetchedBalance);
       } catch (error) {
         console.error("Failed to fetch balance:", error);
@@ -89,8 +85,7 @@ const AccountDetail = ({ account }: { account: any }) => {
     };
 
     fetchBalance();
-  }, [publicKey]); // Re-run when the selected account (public key) changes
-
+  }, [publicKey]);
   useEffect(() => {
     if (copied) {
       const timeout = setTimeout(() => {
@@ -137,10 +132,9 @@ const AccountDetail = ({ account }: { account: any }) => {
   );
 };
 
-// Mock function to simulate fetching balance from a blockchain (replace this with an actual RPC call)
 const mockFetchBalance = async (publicKey: string): Promise<number> => {
   console.log("Fetching balance for public key:", publicKey);
-  return new Promise((resolve) => setTimeout(() => resolve(123.45), 1000)); // Simulated balance
+  return new Promise((resolve) => setTimeout(() => resolve(123.45), 1000)); 
 };
 
 const Account = ({
