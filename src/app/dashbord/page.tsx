@@ -1,9 +1,17 @@
 "use client"
 import { useEffect, useState } from "react";
 import { PrimaryButton } from "../component/Button";
-
+import { useRouter } from "next/navigation";
 
 const Dashbord = () => {
+    const router = useRouter()
+    useEffect(()=>{
+        // fetch account
+        // 1. see if there is any account in accunt array
+        // 2. false - route to createAccount
+    },[])
+
+
     return <div className=" grid grid-cols-12 h-screen w-full">
         <div className="flex flex-col justify-between col-span-2 bg-slate-950 m-2">
             <div>
@@ -15,7 +23,7 @@ const Dashbord = () => {
             </div>
             <div className="mb-12">
                 <div className="flex justify-center">
-                    <button className=" bg-slate-500 font-semibold p-4 w-full text-2xl">Create Account</button>
+                    <button className=" bg-slate-500 font-semibold p-4 w-full text-2xl" onClick={()=>{router.push('/createAccount')}}>Create Account</button>
                 </div>
                 <div>
                     <button className="bg-slate-600 font-semibold p-4 w-full text-2xl">Setting</button>
@@ -68,73 +76,6 @@ const AccountDetail = () => {
             <PrimaryButton onClick={() => { }}>Send</PrimaryButton>
             <PrimaryButton onClick={() => { }}>Swap</PrimaryButton>
             <PrimaryButton onClick={() => { }}>Recieve</PrimaryButton>
-        </div>
-        <div>
-            <h3 className="flex justify-center text-2xl font-semibold bg-slate-900 p-3">Transactions</h3>
-            <div className="relative overflow-x-auto">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                                to
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                value
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                fee
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                signature
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Apple MacBook Pro 17"
-                            </th>
-                            <td className="px-6 py-4">
-                                Silver
-                            </td>
-                            <td className="px-6 py-4">
-                                Laptop
-                            </td>
-                            <td className="px-6 py-4">
-                                $2999
-                            </td>
-                        </tr>
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Microsoft Surface Pro
-                            </th>
-                            <td className="px-6 py-4">
-                                White
-                            </td>
-                            <td className="px-6 py-4">
-                                Laptop PC
-                            </td>
-                            <td className="px-6 py-4">
-                                $1999
-                            </td>
-                        </tr>
-                        <tr className="bg-white dark:bg-gray-800">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Magic Mouse 2
-                            </th>
-                            <td className="px-6 py-4">
-                                Black
-                            </td>
-                            <td className="px-6 py-4">
-                                Accessories
-                            </td>
-                            <td className="px-6 py-4">
-                                $99
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 }
